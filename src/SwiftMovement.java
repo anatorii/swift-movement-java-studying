@@ -20,6 +20,17 @@ public class SwiftMovement extends JFrame {
         initGui();
     }
 
+    @Override
+    public void setVisible(boolean b) {
+        super.setVisible(b);
+        clientWidth = SwiftMovement.width;
+        clientHeight = SwiftMovement.height;
+        if (isResizable()) {
+            clientWidth = getContentPane().getWidth();
+            clientHeight = getContentPane().getHeight();
+        }
+    }
+
     private void initGui() throws IOException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -66,12 +77,12 @@ public class SwiftMovement extends JFrame {
                 int newY = label.getY() + verShift * (e.isShiftDown() ? 2 : 1);
                 if (newX < 0) {
                     newX = clientWidth - label.getWidth();
-                } else if (newX >= (clientWidth - label.getWidth())) {
+                } else if (newX > (clientWidth - label.getWidth())) {
                     newX = 0;
                 }
                 if (newY < 0) {
                     newY = clientHeight - label.getHeight();
-                } else if (newY >= (clientHeight - label.getHeight())) {
+                } else if (newY > (clientHeight - label.getHeight())) {
                     newY = 0;
                 }
                 label.setBounds(newX, newY, label.getWidth(), label.getHeight());
@@ -87,13 +98,6 @@ public class SwiftMovement extends JFrame {
                     SwiftMovement frame = new SwiftMovement();
                     frame.pack();
                     frame.setVisible(true);
-
-                    frame.clientWidth = SwiftMovement.width;
-                    frame.clientHeight = SwiftMovement.height;
-                    if (frame.isResizable()) {
-                        frame.clientWidth = frame.getContentPane().getWidth();
-                        frame.clientHeight = frame.getContentPane().getHeight();
-                    }
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
